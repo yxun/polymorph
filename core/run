@@ -1,0 +1,58 @@
+#!/bin/bash
+
+SOURCE_DIR='../src'
+SOURCE_NAME='HelloWorld'
+EXECUTABLE_DIR='../output'
+EXECUTABLE_NAME='HelloWorld'
+
+pushd ${SOURCE_DIR} 1> /dev/null
+
+case "$1" in
+    bash)
+        # Bash
+        chmod +x ${EXECUTABLE_NAME}.sh
+        ./${EXECUTABLE_NAME}.sh
+        ;;
+    c)
+        # C
+        gcc -o ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} ${SOURCE_NAME}.c
+        ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}
+        ;;
+    c++)
+        # C++
+        g++ -o ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} ${SOURCE_NAME}.cpp
+        ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}
+        ;;
+    go)
+        # Go
+        go build -o ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} ${SOURCE_NAME}.go
+        ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}
+        ;;
+    java)
+        # Java
+        javac -d ${EXECUTABLE_DIR} ${SOURCE_NAME}.java
+        pushd ${EXECUTABLE_DIR} 1> /dev/null
+        java ${EXECUTABLE_NAME}
+        popd 1> /dev/null
+        ;;
+    python)
+        # Python
+        python ${SOURCE_NAME}.py
+        ;;
+    ruby)
+        # Ruby
+        ruby ${SOURCE_NAME}.rb
+        ;;
+    rust)
+        # Rust
+        rustc -o ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} ${SOURCE_NAME}.rs
+        ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}
+        ;;
+    *)
+        echo $"Usage: $0 {bash|c|c++|go|java|python|ruby|rust}"
+        exit 1
+esac
+
+rm ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} 2> /dev/null
+rm ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}.class 2> /dev/null
+popd 1> /dev/null

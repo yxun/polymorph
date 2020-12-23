@@ -1,0 +1,7 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+
+COPY ../scripts/ /opt/scripts
+COPY ../src /opt/src
+COPY ../core/play /opt/play
+RUN scripts/install_runtime_all.sh && scripts/install_rust_default.sh
+ENTRYPOINT [ "/opt/play" ]

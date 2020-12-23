@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SOURCE_DIR='../src'
+SOURCE_DIR='../src/helloworld'
 SOURCE_NAME='HelloWorld'
-EXECUTABLE_DIR='../output'
+EXECUTABLE_DIR='../../output'
 EXECUTABLE_NAME='HelloWorld'
 
 pushd ${SOURCE_DIR} 1> /dev/null
@@ -37,7 +37,7 @@ case "$1" in
         ;;
     python)
         # Python
-        python ${SOURCE_NAME}.py
+        python3 ${SOURCE_NAME}.py
         ;;
     ruby)
         # Ruby
@@ -45,6 +45,7 @@ case "$1" in
         ;;
     rust)
         # Rust
+        source $HOME/.cargo/env
         rustc -o ${EXECUTABLE_DIR}/${EXECUTABLE_NAME} ${SOURCE_NAME}.rs
         ${EXECUTABLE_DIR}/${EXECUTABLE_NAME}
         ;;

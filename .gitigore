@@ -1,3 +1,6 @@
 
 # binary files
 output/*
+
+# Python3 virtual environment
+.env

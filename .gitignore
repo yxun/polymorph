@@ -1,0 +1,19 @@
+
+# binary files
+output/*
+
+# Python3 virtual environment
+.env
+
+# Java
+target
+*.class
+
+# Maven
+.settings
+.classpath
+.project
+bin
+
+# vscode
+.vscode

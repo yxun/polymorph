@@ -1,5 +1,6 @@
+package message;
+
 import java.util.ArrayList;
-import message.Block;
 
 public class BlockTest {
 

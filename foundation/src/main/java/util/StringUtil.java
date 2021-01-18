@@ -1,10 +1,15 @@
 package util;
 
 import java.security.MessageDigest;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Key;
+import java.security.Signature;
+import java.util.Base64;
 
 public class StringUtil {
     // Applies SHA256 to a string and returns the result
-    public static String applySHA256(String input) {
+    public static String ApplySHA256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             // Applies SHA256
@@ -19,6 +24,39 @@ public class StringUtil {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Applies ECDSA signature and returns the result as bytes
+    public static byte[] ApplyECDSASig(PrivateKey privateKey, String input) {
+        Signature dsa;
+        byte[] output = new byte[0];
+        try {
+            dsa = Signature.getInstance("ECDSA", "BC");
+            dsa.initSign(privateKey);
+            byte[] strByte = input.getBytes();
+            dsa.update(strByte);
+            byte[] realSig = dsa.sign();
+            output = realSig;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return output;
+    }
+
+    // Verifies a String signature
+    public static boolean VerifyECDSASig(PublicKey publicKey, String data, byte[] signature) {
+        try {
+            Signature ecdsaVerify = Signature.getInstance("ECDSA", "BC");
+            ecdsaVerify.initVerify(publicKey);
+            ecdsaVerify.update(data.getBytes());
+            return ecdsaVerify.verify(signature);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String GetStringFromKey(Key key) {
+        return Base64.getEncoder().encodeToString(key.getEncoded());
     }
     
 }
